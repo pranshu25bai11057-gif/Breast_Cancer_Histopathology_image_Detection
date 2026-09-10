@@ -139,9 +139,7 @@ def train_and_evaluate():
     print(f"\nSaved final model to: {MODEL_PATH}")
     
     # Evaluate on unseen Test Set
-    print("\n=============================================")
-    print("           TEST SET EVALUATION               ")
-    print("=============================================")
+    print("\n=============================================\n           TEST SET EVALUATION\n=============================================")
     
     y_true = []
     y_pred = []
