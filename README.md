@@ -6,7 +6,7 @@ An AI/ML-based application for classifying breast histopathology images as **Ben
 
 ---
 
-## 📌 Table of Contents
+##  Table of Contents
 
 * [Project Overview](#-project-overview)
 * [Problem Statement](#-problem-statement)
@@ -26,7 +26,7 @@ An AI/ML-based application for classifying breast histopathology images as **Ben
 
 ---
 
-## 📖 Project Overview
+##  Project Overview
 
 Breast cancer is one of the most common types of cancer worldwide. Histopathology is an important method used for examining tissue samples and identifying abnormal cellular structures.
 
@@ -45,7 +45,7 @@ Along with the predicted class, the application displays the model's **predictio
 
 ---
 
-## 🎯 Problem Statement
+##  Problem Statement
 
 Traditional histopathology analysis requires examination of tissue samples by trained medical professionals. This process can be time-consuming and may involve significant manual effort.
 
@@ -53,7 +53,7 @@ The objective of this project is to demonstrate how **deep learning-based image 
 
 ---
 
-## 🚀 Objectives
+##  Objectives
 
 The main objectives of this project are:
 
@@ -67,7 +67,7 @@ The main objectives of this project are:
 
 ---
 
-# 🔄 How the System Works
+#  How the System Works
 
 The application follows a simple five-stage process:
 
@@ -113,7 +113,7 @@ The application displays:
 
 ---
 
-# 🧠 System Workflow
+#  System Workflow
 
 ```text
                     ┌───────────────────┐
@@ -157,7 +157,7 @@ The application displays:
 
 ---
 
-# 🛠️ Technology Stack
+#  Technology Stack
 
 | Technology             | Purpose                                   |
 | ---------------------- | ----------------------------------------- |
@@ -172,7 +172,7 @@ The application displays:
 
 ---
 
-# 📂 Project Structure
+#  Project Structure
 
 A typical project structure is:
 
@@ -202,7 +202,7 @@ Project-Exhibition-01/
 
 ---
 
-# ⚙️ Installation
+#  Installation
 
 ## 1. Clone the Repository
 
@@ -250,7 +250,7 @@ pip install -r requirements.txt
 
 ---
 
-# ▶️ Running the Application
+#  Running the Application
 
 Start the Streamlit application using:
 
@@ -264,7 +264,7 @@ Open the URL in your browser to access the application.
 
 ---
 
-# 🔬 Model Prediction
+#  Model Prediction
 
 The prediction pipeline can be summarized as:
 
@@ -304,27 +304,27 @@ Confidence: XX.XX%
 
 # ✨ Key Features
 
-### 🖼️ Image Upload
+###  Image Upload
 
 Users can upload histopathology images directly through the web interface.
 
-### ✅ Input Validation
+### Input Validation
 
 The application validates the uploaded image before sending it to the model.
 
-### 🧠 CNN-Based Classification
+### CNN-Based Classification
 
 A trained Convolutional Neural Network is used for image classification.
 
-### 📊 Confidence Score
+###  Confidence Score
 
 The system provides the model's confidence along with the predicted class.
 
-### 🌐 Streamlit Interface
+###  Streamlit Interface
 
 A simple web interface makes the model accessible without requiring users to interact directly with Python code.
 
-### ⚡ End-to-End Workflow
+###  End-to-End Workflow
 
 The project demonstrates the complete pipeline:
 
@@ -334,7 +334,7 @@ Image → Validation → Preprocessing → Model → Prediction
 
 ---
 
-# 📈 Model Evaluation
+#  Model Evaluation
 
 The trained model can be evaluated using standard classification metrics such as:
 
@@ -367,7 +367,7 @@ For example:
 
 ---
 
-# 👥 Team & Contributions
+#  Team & Contributions
 
 ## Author
 
@@ -397,7 +397,7 @@ The project was developed collaboratively, with team members contributing to dif
 
 ---
 
-# ⚠️ Limitations
+#  Limitations
 
 The current project has several limitations:
 
@@ -409,11 +409,11 @@ The current project has several limitations:
 
 ---
 
-# 🔮 Future Scope
+#  Future Scope
 
 The project can be further improved by:
 
-### 🧠 Advanced Deep Learning Models
+###  Advanced Deep Learning Models
 
 Experimenting with architectures such as:
 
@@ -422,15 +422,15 @@ Experimenting with architectures such as:
 * DenseNet
 * Vision Transformers
 
-### 📊 Improved Dataset
+###  Improved Dataset
 
 Training with a larger and more diverse dataset can improve generalization.
 
-### 🔍 Explainable AI
+###  Explainable AI
 
 Techniques such as **Grad-CAM** can be added to visualize the regions of an image that influenced the model's prediction.
 
-### 📱 Improved Application
+###  Improved Application
 
 The Streamlit application could be enhanced with:
 
@@ -439,13 +439,13 @@ The Streamlit application could be enhanced with:
 * Interactive visualizations
 * Model performance dashboard
 
-### ☁️ Deployment
+###  Deployment
 
 The application could be deployed to a cloud platform for easier accessibility and demonstration.
 
 ---
 
-# 🏁 Conclusion
+#  Conclusion
 
 **Project Exhibition 01** demonstrates how Artificial Intelligence and Deep Learning can be applied to breast histopathology image classification.
 
@@ -469,7 +469,7 @@ The project provides an educational demonstration of how computer vision and dee
 
 ---
 
-## ⭐ Project Highlights
+##  Project Highlights
 
 > **AI/ML Project**
 > **Domain:** Medical Image Analysis
@@ -481,7 +481,7 @@ The project provides an educational demonstration of how computer vision and dee
 
 ---
 
-## 📜 Disclaimer
+##  Disclaimer
 
 This project is intended **only for educational and research purposes**. The predictions generated by the model should not be used as a substitute for professional medical advice, diagnosis, or treatment.
 
