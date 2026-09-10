@@ -413,7 +413,7 @@ The current project has several limitations:
 
 The project can be further improved by:
 
-###  Advanced Deep Learning Models
+### Advanced Deep Learning Models
 
 Experimenting with architectures such as:
 
