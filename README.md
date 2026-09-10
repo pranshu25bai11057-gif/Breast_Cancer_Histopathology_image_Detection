@@ -124,7 +124,7 @@ The application will open in the browser and provide the image-upload interface.
 - **Ayush Shukla**
 - **Debasish Kumar Sahoo**
 - **Manvendra Kumar**
-- **Piyush Kumar Das**
+- **Piyush Kumar Dash**
 
 The project was developed collaboratively, with team members contributing to areas such as research, machine learning, application development, testing, and presentation.
 
