@@ -47,7 +47,7 @@ Along with the predicted class, the application displays the model's **output co
 
 ---
 
-# 🎯 Problem Statement
+# Problem Statement
 
 Histopathology analysis involves examining tissue patterns under microscopy and can require substantial expert effort. This project demonstrates how a compact deep-learning image-classification pipeline can provide an automated preliminary classification of breast histopathology inputs while also handling unsuitable inputs.
 
@@ -70,7 +70,7 @@ The main objectives of this project are:
 
 ---
 
-# ⚙️ How the System Works
+# How the System Works
 
 The current application follows these stages:
 
@@ -164,7 +164,7 @@ The Streamlit application displays:
 
 ---
 
-# 💻 Technology Stack
+# Technology Stack
 
 | Technology | Purpose |
 | --- | --- |
@@ -179,7 +179,7 @@ The Streamlit application displays:
 
 ---
 
-# 📁 Project Structure
+# Project Structure
 
 The current repository keeps the runnable application and trained model available for inference, while the data-preparation and evaluation scripts are also included for reproducibility.
 
@@ -218,7 +218,7 @@ Breast_Cancer_Histopathology_image_Detection/
 
 ---
 
-# 🛠 Installation
+# Installation
 
 ## 1. Clone the Repository
 
@@ -263,7 +263,7 @@ The application dependencies include TensorFlow, Pillow, NumPy, scikit-learn, Ma
 
 ---
 
-# ▶️ Running the Application
+# Running the Application
 
 From the repository root, run:
 
@@ -287,7 +287,7 @@ Open that URL in your browser if it does not launch automatically.
 
 ---
 
-# 🧠 Model Prediction
+# Model Prediction
 
 The current prediction pipeline is:
 
@@ -327,7 +327,7 @@ Corrupted or unreadable files are trapped before CNN inference and returned as a
 
 ---
 
-# 🧱 CNN Architecture
+# CNN Architecture
 
 The current training code defines a **4-stage CNN** with Batch Normalization, Dropout, Max Pooling, Global Average Pooling, L2 regularization, and a compact classification head.
 
@@ -375,7 +375,7 @@ Dense(3, Softmax)
 
 ---
 
-# ✨ Key Features
+# Key Features
 
 ### Image Upload
 
@@ -411,7 +411,7 @@ The data-preparation script groups BreaKHis images by patient identifier before 
 
 ---
 
-# 📊 Model Evaluation
+# Model Evaluation
 
 The current evaluation uses **1,664 test images** and reports three-class performance across **Benign, Invalid, and Malignant**.
 
@@ -478,7 +478,7 @@ True Malignant  203       0       900
 
 ---
 
-# 🧪 Testing
+# Testing
 
 The repository includes `test_system.py` for system verification. The test script checks:
 
@@ -499,7 +499,7 @@ ALL SYSTEM VERIFICATION TESTS PASSED
 
 ---
 
-# 👥 Team & Contributions
+# Team & Contributions
 
 ## Author
 
@@ -529,7 +529,7 @@ The project was developed collaboratively, with team members contributing to are
 
 ---
 
-# ⚠️ Limitations
+# Limitations
 
 The current project has several limitations:
 
@@ -543,7 +543,7 @@ The current project has several limitations:
 
 ---
 
-# 🚀 Future Scope
+# Future Scope
 
 The project can be further improved by:
 
@@ -583,7 +583,7 @@ The Streamlit application can be deployed to a suitable cloud platform after loc
 
 ---
 
-# 📝 Conclusion
+# Conclusion
 
 Project Exhibition 01 demonstrates how Artificial Intelligence and Deep Learning can be applied to breast histopathology image classification.
 
@@ -611,7 +611,7 @@ The project is intended as an educational and research demonstration of medical 
 
 ---
 
-## 📌 Project Highlights
+## Project Highlights
 
 > **AI/ML Project**  
 > **Domain:** Medical Image Analysis  
