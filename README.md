@@ -123,7 +123,7 @@ The Streamlit application displays:
 
 ---
 
-# 🔄 System Workflow
+# System Workflow
 
 ```text
                     ┌────────────────────┐
@@ -528,54 +528,6 @@ The project was developed collaboratively, with team members contributing to are
 * Project presentation
 
 ---
-
-# Limitations
-
-The current project has several limitations:
-
-1. Model performance depends strongly on the quality and diversity of the training data.
-2. The current model shows weaker benign-class performance than malignant performance.
-3. Subtype performance is uneven, especially for Fibroadenoma and Phyllodes Tumor in the reported test set.
-4. The Invalid class uses synthetic non-histopathology images for training and evaluation.
-5. Histopathology images can vary in staining, magnification, and acquisition conditions.
-6. Model confidence should not be interpreted as a clinically calibrated probability.
-7. The system is intended for educational and research demonstration and is not a clinical diagnostic system.
-
----
-
-# Future Scope
-
-The project can be further improved by:
-
-### Advanced Deep Learning Models
-
-Experimenting with architectures such as:
-
-* ResNet
-* EfficientNet
-* DenseNet
-* Vision Transformers
-
-### Improved Dataset
-
-Using a larger and more diverse collection of histopathology images and a broader negative-image set for the Invalid class.
-
-### Explainable AI
-
-Techniques such as **Grad-CAM** can be added to visualize image regions that influence a prediction.
-
-### Improved Evaluation
-
-Automating the generation of tables and report summaries directly from computed metrics to avoid stale hard-coded values.
-
-### Improved Application
-
-Potential additions include:
-
-* Prediction history
-* Batch image processing
-* Interactive visualizations
-* Model performance dashboard
 
 ### Deployment
 
