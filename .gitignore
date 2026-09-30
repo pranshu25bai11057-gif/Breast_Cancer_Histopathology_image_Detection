@@ -1,0 +1,18 @@
+# Virtual Environment
+venv/
+env/
+__pycache__/
+*.pyc
+
+# Raw & Prepared Datasets (large files)
+BreaKHis_v1/
+data/
+
+# Model & Keras Cache
+.keras/
+*.log
+
+# OS / IDE
+.DS_Store
+.vscode/
+.idea/
