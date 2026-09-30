@@ -2,11 +2,11 @@
 
 # Breast Cancer Detection Using Histopathology Images and Machine Learning
 
-An AI/ML-based application for classifying breast histopathology images as **Benign** or **Malignant** using a **Convolutional Neural Network (CNN)**.
+An AI/ML-based application for classifying breast histopathology images as **Benign**, **Malignant**, or **Invalid** using a **Convolutional Neural Network (CNN)**. The application includes image validation, unified preprocessing, a saved Keras model, and a Streamlit interface.
 
 ---
 
-##  Table of Contents
+## 📑 Table of Contents
 
 * [Project Overview](#-project-overview)
 * [Problem Statement](#-problem-statement)
@@ -18,7 +18,10 @@ An AI/ML-based application for classifying breast histopathology images as **Ben
 * [Installation](#-installation)
 * [Running the Application](#-running-the-application)
 * [Model Prediction](#-model-prediction)
+* [CNN Architecture](#-cnn-architecture)
 * [Features](#-features)
+* [Model Evaluation](#-model-evaluation)
+* [Testing](#-testing)
 * [Team & Contributions](#-team--contributions)
 * [Limitations](#-limitations)
 * [Future Scope](#-future-scope)
@@ -26,215 +29,224 @@ An AI/ML-based application for classifying breast histopathology images as **Ben
 
 ---
 
-##  Project Overview
+# 🔬 Project Overview
 
-Breast cancer is one of the most common types of cancer worldwide. Histopathology is an important method used for examining tissue samples and identifying abnormal cellular structures.
+Breast cancer histopathology images contain visual cellular and tissue patterns that can be difficult to interpret consistently. This project demonstrates the use of **Machine Learning and Deep Learning** for automated classification of breast histopathology images.
 
-This project demonstrates the use of **Machine Learning and Deep Learning** for automated classification of breast histopathology images.
+The current system accepts a histopathology image, verifies that it can be read, preprocesses it, and passes it through a trained **4-stage Convolutional Neural Network (CNN)**.
 
-The system accepts a histopathology image from the user, validates the input, preprocesses the image, and passes it through a trained **Convolutional Neural Network (CNN)**.
-
-The model produces one of two classifications:
+The model produces one of three classifications:
 
 * 🟢 **Benign**
 * 🔴 **Malignant**
+* 🟠 **Invalid** - non-histopathology or unsuitable input class
 
-Along with the predicted class, the application displays the model's **prediction confidence**.
+Along with the predicted class, the application displays the model's **output confidence** and the full probability distribution across the three classes.
 
 > **Note:** This project is developed for educational and research purposes. It is not intended to replace professional medical diagnosis.
 
 ---
 
-##  Problem Statement
+# 🎯 Problem Statement
 
-Traditional histopathology analysis requires examination of tissue samples by trained medical professionals. This process can be time-consuming and may involve significant manual effort.
+Histopathology analysis involves examining tissue patterns under microscopy and can require substantial expert effort. This project demonstrates how a compact deep-learning image-classification pipeline can provide an automated preliminary classification of breast histopathology inputs while also handling unsuitable inputs.
 
-The objective of this project is to demonstrate how **deep learning-based image classification** can assist in analyzing histopathology images and provide an automated preliminary classification.
+The project is intentionally an educational/research prototype and is **not** designed for clinical diagnosis or treatment decisions.
 
 ---
 
-##  Objectives
+# ✅ Objectives
 
 The main objectives of this project are:
 
-1. Develop a CNN-based image classification model.
-2. Classify breast histopathology images into **Benign** and **Malignant** categories.
-3. Validate uploaded images before performing prediction.
-4. Apply appropriate image preprocessing.
-5. Provide prediction results with confidence scores.
+1. Develop a reproducible CNN-based histopathology image-classification model.
+2. Classify breast histopathology images into **Benign**, **Malignant**, and **Invalid** categories.
+3. Validate image files before model inference.
+4. Apply the same core preprocessing path during training and inference.
+5. Provide prediction results with model confidence and class probabilities.
 6. Develop a simple and user-friendly web interface using Streamlit.
-7. Demonstrate an end-to-end AI/ML image-classification workflow.
+7. Evaluate performance on a patient-level separated test set.
+8. Demonstrate an end-to-end AI/ML workflow including data preparation, training, evaluation, inference, and testing.
 
 ---
 
-#  How the System Works
+# ⚙️ How the System Works
 
-The application follows a simple five-stage process:
+The current application follows these stages:
 
-### 1. Image Upload
+### 1. Image Input
 
-The user uploads a breast histopathology image through the Streamlit application.
+The user can either:
+
+* Upload a PNG, JPG, or JPEG image, or
+* Select one of the built-in demonstration samples.
 
 ### 2. Image Validation
 
-The system checks whether the uploaded file is a valid image and suitable for the classification workflow.
+The system attempts to open and verify the image. Corrupted, unsupported, or unreadable files are handled before CNN inference.
 
-Invalid or unsupported inputs are rejected before they reach the model.
+The trained model also contains an **Invalid** output class for non-histopathology images.
 
 ### 3. Image Preprocessing
 
-Valid images are prepared according to the requirements of the trained model.
+The image is:
 
-Typical preprocessing includes:
-
-* Image loading
-* Image resizing
-* Format conversion
-* Pixel normalization
-* Conversion into a model-compatible array
+* Converted to RGB
+* Resized to **128 × 128** pixels
+* Converted into a numerical array
+* Normalized to the **[0, 1]** range
+* Expanded to a batch shape of **(1, 128, 128, 3)**
 
 ### 4. CNN Prediction
 
-The preprocessed image is passed to the trained **Convolutional Neural Network**.
+The preprocessed image is passed to the trained 4-stage CNN stored as:
 
-The CNN extracts relevant visual features from the image and predicts the corresponding class.
+```text
+model/breast_cancer_model.keras
+```
 
 ### 5. Result Display
 
-The application displays:
+The Streamlit application displays:
 
 **Predicted Class**
 
-→ Benign / Malignant
+→ Benign / Malignant / Invalid
 
 **Confidence**
 
-→ Model's confidence in its prediction.
+→ Top model output for the predicted class.
+
+**Probability Distribution**
+
+→ Probability values for all three classes.
 
 ---
 
-#  System Workflow
+# 🔄 System Workflow
 
 ```text
-                    ┌───────────────────┐
-                    │   User Uploads    │
-                    │      Image        │
-                    └─────────┬─────────┘
+                    ┌────────────────────┐
+                    │  User Upload /     │
+                    │  Demo Sample       │
+                    └─────────┬──────────┘
                               │
                               ▼
-                    ┌───────────────────┐
-                    │ Image Validation  │
-                    └─────────┬─────────┘
+                    ┌────────────────────┐
+                    │ Image Verification │
+                    └─────────┬──────────┘
                               │
-                     ┌────────┴────────┐
-                     │                 │
-                    NO                YES
-                     │                 │
-                     ▼                 ▼
-             ┌──────────────┐   ┌──────────────┐
-             │ Invalid      │   │ Preprocessing│
-             │ Image        │   └──────┬───────┘
-             └──────────────┘          │
-                                       ▼
-                               ┌──────────────┐
-                               │  CNN Model   │
-                               └──────┬───────┘
-                                      │
-                                      ▼
-                              ┌──────────────┐
-                              │ Classification│
-                              └──────┬───────┘
-                                     │
-                           ┌─────────┴─────────┐
-                           │                   │
-                           ▼                   ▼
-                      🟢 Benign          🔴 Malignant
-                           │                   │
-                           └─────────┬─────────┘
-                                     ▼
-                              Confidence Score
+                    ┌─────────┴─────────┐
+                    │                   │
+               Invalid/File OK      Corrupt/Unsupported
+                    │                   │
+                    ▼                   ▼
+             ┌──────────────┐      ┌──────────────┐
+             │ Preprocessing│      │ Error/Invalid│
+             └──────┬───────┘      └──────────────┘
+                    │
+                    ▼
+             ┌──────────────┐
+             │ 4-Stage CNN  │
+             └──────┬───────┘
+                    │
+                    ▼
+       ┌────────────┼────────────┐
+       │            │            │
+       ▼            ▼            ▼
+    Benign       Invalid     Malignant
+       │            │            │
+       └────────────┼────────────┘
+                    ▼
+           Confidence +
+        Probability Distribution
 ```
 
 ---
 
-#  Technology Stack
+# 💻 Technology Stack
 
-| Technology             | Purpose                                   |
-| ---------------------- | ----------------------------------------- |
-| **Python**             | Main programming language                 |
-| **TensorFlow / Keras** | CNN development and model training        |
-| **NumPy**              | Numerical and image-array operations      |
-| **OpenCV**             | Image processing                          |
-| **Pillow (PIL)**       | Image loading and manipulation            |
-| **Scikit-learn**       | Machine learning utilities and evaluation |
-| **Matplotlib**         | Data visualization                        |
-| **Streamlit**          | Web application interface                 |
+| Technology | Purpose |
+| --- | --- |
+| **Python** | Main programming language |
+| **TensorFlow / Keras** | CNN development, training, and model inference |
+| **NumPy** | Numerical and image-array operations |
+| **OpenCV** | Image-processing dependency |
+| **Pillow (PIL)** | Image loading, validation, conversion, and resizing |
+| **Scikit-learn** | Classification metrics and class-weight calculation |
+| **Matplotlib** | Evaluation visualizations |
+| **Streamlit** | Web application interface |
 
 ---
 
-#  Project Structure
+# 📁 Project Structure
 
-A typical project structure is:
+The current repository keeps the runnable application and trained model available for inference, while the data-preparation and evaluation scripts are also included for reproducibility.
 
 ```text
-Project-Exhibition-01/
+Breast_Cancer_Histopathology_image_Detection/
 │
 ├── app.py
+├── predict.py
 ├── requirements.txt
+├── .gitattributes
+├── Project Report.pdf
+├── README.md
+├── MODEL_EVALUATION_REPORT.md
 │
 ├── model/
-│   └── trained_model
+│   └── breast_cancer_model.keras
 │
-├── dataset/
-│   ├── benign/
-│   └── malignant/
+├── sample_images/
+│   ├── sample_benign.png
+│   ├── sample_benign_adenoma.png
+│   ├── sample_benign_fibroadenoma.png
+│   ├── sample_invalid.png
+│   ├── sample_malignant.png
+│   ├── sample_malignant_ductal.png
+│   └── sample_malignant_mucinous.png
 │
-├── notebooks/
-│   └── model_training.ipynb
-│
-├── images/
-│   └── screenshots
-│
-└── README.md
+└── breast-cancer-ml/
+    ├── train_model.py
+    ├── prepare_data.py
+    ├── evaluate_detailed.py
+    ├── test_system.py
+    └── requirements.txt
 ```
 
-> The exact folder structure may vary depending on the final project implementation.
+> The raw BreaKHis dataset is not required to run the saved-model application. The training scripts expect the prepared dataset structure described in `prepare_data.py`.
 
 ---
 
-#  Installation
+# 🛠 Installation
 
 ## 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/pranshu25bai11057-gif/Breast_Cancer_Histopathology_image_Detection.git
 ```
 
-Navigate to the project directory:
+Navigate to the repository:
 
 ```bash
-cd Project-Exhibition-01
+cd Breast_Cancer_Histopathology_image_Detection
 ```
 
 ---
 
 ## 2. Create a Virtual Environment
 
-Create a Python virtual environment:
-
-```bash
-python -m venv venv
-```
-
 ### Windows
 
-```bash
+```powershell
+py -3 -m venv venv
 venv\Scripts\activate
 ```
 
 ### Linux / macOS
 
 ```bash
+python3 -m venv venv
 source venv/bin/activate
 ```
 
@@ -242,132 +254,252 @@ source venv/bin/activate
 
 ## 3. Install Dependencies
 
-Install the required Python packages:
-
 ```bash
-pip install -r requirements.txt
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
 ```
+
+The application dependencies include TensorFlow, Pillow, NumPy, scikit-learn, Matplotlib, OpenCV, and Streamlit.
 
 ---
 
-#  Running the Application
+# ▶️ Running the Application
 
-Start the Streamlit application using:
+From the repository root, run:
 
 ```bash
 streamlit run app.py
 ```
 
-After running the command, Streamlit will provide a local URL.
+or:
 
-Open the URL in your browser to access the application.
+```bash
+python -m streamlit run app.py
+```
+
+Streamlit will provide a local URL, normally:
+
+```text
+http://localhost:8501
+```
+
+Open that URL in your browser if it does not launch automatically.
 
 ---
 
-#  Model Prediction
+# 🧠 Model Prediction
 
-The prediction pipeline can be summarized as:
+The current prediction pipeline is:
 
 ```text
 Input Image
      ↓
-Image Validation
+Image Verification
      ↓
-Image Resize
+RGB Conversion
      ↓
-Normalization
+Resize to 128 × 128
      ↓
-CNN Model
+Normalize to [0, 1]
      ↓
-Prediction Probability
+4-Stage CNN
      ↓
-Classification
+3-Class Softmax Output
      ↓
-Benign / Malignant
+Benign / Invalid / Malignant
+     ↓
+Confidence + Probability Distribution
 ```
 
-The final output contains:
+The saved Keras model is loaded from:
 
 ```text
-Prediction: Benign
-Confidence: XX.XX%
+model/breast_cancer_model.keras
 ```
 
-or
+The inference code maps the three output neurons to:
 
 ```text
-Prediction: Malignant
-Confidence: XX.XX%
+['benign', 'invalid', 'malignant']
 ```
+
+Corrupted or unreadable files are trapped before CNN inference and returned as an invalid/error result.
+
+---
+
+# 🧱 CNN Architecture
+
+The current training code defines a **4-stage CNN** with Batch Normalization, Dropout, Max Pooling, Global Average Pooling, L2 regularization, and a compact classification head.
+
+```text
+Input: 128 × 128 × 3
+        ↓
+Conv2D: 32 filters
+BatchNorm → ReLU → MaxPool → Dropout(0.10)
+        ↓
+Conv2D: 64 filters
+BatchNorm → ReLU → MaxPool → Dropout(0.20)
+        ↓
+Conv2D: 128 filters
+BatchNorm → ReLU → MaxPool → Dropout(0.20)
+        ↓
+Conv2D: 128 filters
+BatchNorm → ReLU → MaxPool → Dropout(0.25)
+        ↓
+Global Average Pooling
+        ↓
+Dense(64, ReLU, L2 regularization)
+        ↓
+Dropout(0.30)
+        ↓
+Dense(3, Softmax)
+```
+
+### Training configuration
+
+| Setting | Current value |
+| --- | --- |
+| Input size | 128 × 128 × 3 |
+| Batch size | 64 |
+| Maximum epochs | 20 |
+| Initial learning rate | 0.001 |
+| Optimizer | Adam |
+| Loss | Sparse categorical cross-entropy |
+| Data augmentation | Horizontal/vertical flip, rotation, zoom |
+| Class balancing | Balanced class weights |
+| Checkpointing | Best validation loss |
+| Early stopping | Patience 5 |
+| Learning-rate reduction | ReduceLROnPlateau |
+
+> The training script is the source of truth for the current CNN architecture. The application UI may contain older descriptive wording about the number of stages; the current training implementation uses four convolutional stages.
 
 ---
 
 # ✨ Key Features
 
-###  Image Upload
+### Image Upload
 
-Users can upload histopathology images directly through the web interface.
+Users can upload PNG, JPG, or JPEG histopathology images directly through the web interface.
+
+### Built-in Demo Samples
+
+The application includes demonstration examples covering benign, malignant, and invalid inputs.
 
 ### Input Validation
 
-The application validates the uploaded image before sending it to the model.
+The prediction utility verifies image integrity and handles corrupted or unsupported files before inference.
 
-### CNN-Based Classification
+### 3-Class CNN Classification
 
-A trained Convolutional Neural Network is used for image classification.
+The model predicts **Benign**, **Malignant**, or **Invalid**.
 
-###  Confidence Score
+### Confidence Score
 
-The system provides the model's confidence along with the predicted class.
+The application displays the top model output as a confidence percentage.
 
-###  Streamlit Interface
+### Probability Distribution
 
-A simple web interface makes the model accessible without requiring users to interact directly with Python code.
+An expandable section shows the model probabilities for all three classes.
 
-###  End-to-End Workflow
+### Streamlit Interface
 
-The project demonstrates the complete pipeline:
+The system can be demonstrated through a simple web interface without directly interacting with Python code.
+
+### Patient-Level Evaluation Design
+
+The data-preparation script groups BreaKHis images by patient identifier before creating train, validation, and test splits.
+
+---
+
+# 📊 Model Evaluation
+
+The current evaluation uses **1,664 test images** and reports three-class performance across **Benign, Invalid, and Malignant**.
+
+## Overall Performance
+
+| Metric | Score |
+| --- | ---: |
+| Accuracy | **75.96%** |
+| Macro Precision | **80.33%** |
+| Weighted Precision | **76.19%** |
+| Macro Recall | **78.85%** |
+| Weighted Recall | **75.96%** |
+| Macro F1-Score | **79.56%** |
+| Weighted F1-Score | **76.07%** |
+
+## Per-Class Performance
+
+| Class | Support | Precision | Recall | F1-Score |
+| --- | ---: | ---: | ---: | ---: |
+| Benign | 486 | 58.72% | 60.29% | 59.49% |
+| Malignant | 1,103 | 82.27% | 81.60% | 81.93% |
+| Invalid | 75 | 100.00% | 94.67% | 97.26% |
+
+## Confusion Matrix
 
 ```text
-Image → Validation → Preprocessing → Model → Prediction
+                  Predicted
+              Benign  Invalid  Malignant
+True Benign     293       0       193
+True Invalid      3      71         1
+True Malignant  203       0       900
+```
+
+## Performance by Magnification
+
+| Magnification | Samples | Accuracy | Weighted Precision | Weighted Recall | Weighted F1 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 40X | 392 | 75.00% | 75.92% | 75.00% | 75.37% |
+| 100X | 422 | 77.73% | 78.16% | 77.73% | 77.91% |
+| 200X | 389 | 73.01% | 73.07% | 73.01% | 73.04% |
+| 400X | 386 | 74.35% | 73.67% | 74.35% | 73.92% |
+
+## Performance by Histopathological Subtype
+
+| Subtype | Type | Samples | Correct | Rate |
+| --- | --- | ---: | ---: | ---: |
+| Ductal Carcinoma | Malignant | 258 | 258 | 100.00% |
+| Fibroadenoma | Benign | 68 | 0 | 0.00% |
+| Lobular Carcinoma | Malignant | 125 | 125 | 100.00% |
+| Mucinous Carcinoma | Malignant | 361 | 261 | 72.30% |
+| Papillary Carcinoma | Malignant | 359 | 256 | 71.31% |
+| Phyllodes Tumor | Benign | 235 | 131 | 55.74% |
+| Tubular Adenoma | Benign | 183 | 162 | 88.52% |
+
+## Invalid-Input Evaluation
+
+* Invalid test samples: **75**
+* Correctly assigned to Invalid: **71 / 75**
+* Invalid recall: **94.67%**
+* Invalid precision: **100.00%**
+* Corrupted/invalid file handling: **Passed in the supplied system tests**
+
+> **Evaluation note:** The repository's `MODEL_EVALUATION_REPORT.md` contains stale hard-coded narrative values that conflict with its computed tables and confusion matrix. The figures above follow the computed metric table and confusion matrix because they are internally consistent.
+
+---
+
+# 🧪 Testing
+
+The repository includes `test_system.py` for system verification. The test script checks:
+
+1. Model file existence.
+2. Successful model loading.
+3. Benign test-image inference.
+4. Malignant test-image inference.
+5. Invalid non-histopathology inference.
+6. Corrupted-file handling.
+7. Built-in demo sample predictions.
+8. Confidence values within the expected 0-100 range.
+
+A successful test run ends with:
+
+```text
+ALL SYSTEM VERIFICATION TESTS PASSED
 ```
 
 ---
 
-#  Model Evaluation
-
-The trained model can be evaluated using standard classification metrics such as:
-
-* Accuracy
-* Precision
-* Recall
-* F1-Score
-* Confusion Matrix
-
-Example:
-
-```text
-              Predicted
-              Benign   Malignant
-Actual
-Benign          TP        FN
-Malignant       FP        TP
-```
-
-> Add the actual evaluation results here once the final trained model metrics are available.
-
-For example:
-
-| Metric    |  Score |
-| --------- | -----: |
-| Accuracy  | XX.XX% |
-| Precision | XX.XX% |
-| Recall    | XX.XX% |
-| F1-Score  | XX.XX% |
-
----
-
-#  Team & Contributions
+# 👥 Team & Contributions
 
 ## Author
 
@@ -383,7 +515,7 @@ For example:
 * **Manvendra Kumar**
 * **Piyush Kumar Dash**
 
-The project was developed collaboratively, with team members contributing to different areas including:
+The project was developed collaboratively, with team members contributing to areas including:
 
 * Dataset research
 * Data preprocessing
@@ -397,19 +529,21 @@ The project was developed collaboratively, with team members contributing to dif
 
 ---
 
-#  Limitations
+# ⚠️ Limitations
 
 The current project has several limitations:
 
-1. The model's performance depends heavily on the quality and diversity of the training dataset.
-2. Histopathology images may vary in staining, magnification, and acquisition conditions.
-3. A machine learning prediction should not be treated as a confirmed medical diagnosis.
-4. Model confidence does not necessarily represent clinical certainty.
-5. The system is intended primarily as an educational/research demonstration.
+1. Model performance depends strongly on the quality and diversity of the training data.
+2. The current model shows weaker benign-class performance than malignant performance.
+3. Subtype performance is uneven, especially for Fibroadenoma and Phyllodes Tumor in the reported test set.
+4. The Invalid class uses synthetic non-histopathology images for training and evaluation.
+5. Histopathology images can vary in staining, magnification, and acquisition conditions.
+6. Model confidence should not be interpreted as a clinically calibrated probability.
+7. The system is intended for educational and research demonstration and is not a clinical diagnostic system.
 
 ---
 
-#  Future Scope
+# 🚀 Future Scope
 
 The project can be further improved by:
 
@@ -422,67 +556,73 @@ Experimenting with architectures such as:
 * DenseNet
 * Vision Transformers
 
-###  Improved Dataset
+### Improved Dataset
 
-Training with a larger and more diverse dataset can improve generalization.
+Using a larger and more diverse collection of histopathology images and a broader negative-image set for the Invalid class.
 
-###  Explainable AI
+### Explainable AI
 
-Techniques such as **Grad-CAM** can be added to visualize the regions of an image that influenced the model's prediction.
+Techniques such as **Grad-CAM** can be added to visualize image regions that influence a prediction.
 
-###  Improved Application
+### Improved Evaluation
 
-The Streamlit application could be enhanced with:
+Automating the generation of tables and report summaries directly from computed metrics to avoid stale hard-coded values.
+
+### Improved Application
+
+Potential additions include:
 
 * Prediction history
 * Batch image processing
 * Interactive visualizations
 * Model performance dashboard
 
-###  Deployment
+### Deployment
 
-The application could be deployed to a cloud platform for easier accessibility and demonstration.
+The Streamlit application can be deployed to a suitable cloud platform after local reproducibility and evaluation are stable.
 
 ---
 
-#  Conclusion
+# 📝 Conclusion
 
-**Project Exhibition 01** demonstrates how Artificial Intelligence and Deep Learning can be applied to breast histopathology image classification.
+Project Exhibition 01 demonstrates how Artificial Intelligence and Deep Learning can be applied to breast histopathology image classification.
 
-The system combines:
+The current system combines:
 
 ```text
 Image Validation
        +
 Image Preprocessing
        +
-CNN Classification
+4-Stage CNN Classification
        +
-Confidence Estimation
+Confidence / Probability Output
        +
 Streamlit Interface
+       +
+System Verification Tests
 ```
 
-to create a simple end-to-end machine learning application capable of classifying histopathology images as **Benign** or **Malignant**.
+to create a compact end-to-end machine-learning application capable of classifying inputs as **Benign**, **Malignant**, or **Invalid**.
 
-The project provides an educational demonstration of how computer vision and deep learning can be used in medical image analysis while emphasizing that such predictions should not replace professional clinical evaluation.
+The current evaluation reports **75.96% three-class accuracy on 1,664 test images**, with **81.60% malignant recall** and **94.67% Invalid-class recall**. The reported subtype results also expose important failure cases, especially within some benign subtypes.
+
+The project is intended as an educational and research demonstration of medical image classification. Its outputs should not be used as a substitute for professional medical evaluation.
 
 ---
 
-##  Project Highlights
+## 📌 Project Highlights
 
-> **AI/ML Project**
-> **Domain:** Medical Image Analysis
-> **Task:** Binary Image Classification
-> **Model:** Convolutional Neural Network (CNN)
-> **Classes:** Benign / Malignant
-> **Language:** Python
+> **AI/ML Project**  
+> **Domain:** Medical Image Analysis  
+> **Task:** 3-Class Image Classification  
+> **Model:** 4-Stage Convolutional Neural Network (CNN)  
+> **Classes:** Benign / Malignant / Invalid  
+> **Language:** Python  
 > **Interface:** Streamlit
 
 ---
 
-##  Disclaimer
+## Disclaimer
 
-This project is intended **only for educational and research purposes**. The predictions generated by the model should not be used as a substitute for professional medical advice, diagnosis, or treatment.
-
-
+This project is intended **only for educational and research purposes**. Predictions generated by the model should not be used as a substitute for professional medical advice, diagnosis, or treatment.
